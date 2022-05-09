@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
 
 export default function App() {
@@ -13,48 +13,34 @@ export default function App() {
   const [username, setUsername] = useState("Jhon Snow")
   const [userage, setUserage] = useState('99')
   const [tasks, setTasks] = useState(['Read', 'Drink water', 'code', 'play the guitar', 'eat'])
+  const [tasks2, setTasks2] = useState([
+    {task: 'Read', id: '1'},
+    {task: 'Drink water', id: '2'},
+    {task: 'code', id: '3'},
+    {task: 'play the guiter', id: '4'},
+    {task: 'eat', id: '5'},
+  ])
 
   return (
-    <View style={styles.container}>
-      <ScrollView>
-      <View style={styles.navbar}>
-        <Text>This is the navbar</Text>
-      </View>
-      <View style={styles.body}>
-        <Text>Hello everyone 👋</Text>
-        <Text>I'm {person.name}, a {person.age} years old developer</Text>
-        <View style={styles.btnContainer}>
-          <Button title="The other self ?" onPress={pressHandler}/>
-        </View>
-        <Text>Your name is {username}, aged {userage} ?</Text>
-        <TextInput 
-        style={styles.textInput}
-        placeholder="e.g. Jhon Snow"
-        keyboardType='default'
-        onChangeText={(val)=>setUsername(val)}
+    <>
+        {/* FlatList to render a list */}
+        <FlatList
+          numColumns={1}
+          keyExtractor={(item)=> item.id}
+          data={tasks2}
+          renderItem={({item}) => (<>
+          <Text style={styles.tasks}>task : {item.task}</Text>
+          <Text style={styles.tasks}>task : {item.task}</Text>
+          <Text style={styles.tasks}>task : {item.task}</Text>
+          </>
+          )}
         />
-
-        <TextInput 
-        style={styles.textInput}
-        placeholder="e.g. 99"
-        keyboardType='numeric' 
-        onChangeText={val=>setUserage(val)}
-        />
-
-        <Text>These are my daily todo list</Text>
-        <View>
-          {
-            tasks.map((item, index)=>(
-              <Text style={styles.tasks} key={index}>{item}</Text>
-            ))
-          }
-        </View>
-      </View>
-      </ScrollView>
-    </View>
+    </>
   );
 }
 
+
+// Styles //
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
